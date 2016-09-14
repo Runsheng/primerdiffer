@@ -13,8 +13,6 @@ Some general functions used for sequence file parser and coding running
 from Bio import SeqIO
 
 
-
-
 def fasta2dic(fastafile):
     """
     Give a fasta file name, return a dict contains the name and seq
@@ -49,3 +47,7 @@ def chr_select(seq_dict, chro, start,end):
     name=chro+ ":"+str(round(float(start)/1000000,2))+"M"
     seq=str(seq_dict[chro])[start:end]
     return name,seq
+
+
+if __name__=="__main__":
+    pass

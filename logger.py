@@ -24,10 +24,13 @@ def log_summary():
     return logger
 
 
-def test_summary():
+def test_log_summary():
     logger=log_summary()
     logger.info("This is just a test, print number 100 as float"+","+str(float(1)*100))
     logger.info("In total %d line, %s" % (2, "just a test number"))
 
+
 if __name__=="__main__":
-    test_summary()
+    import os
+    print(os.environ["PATH"])
+    test_log_summary()
