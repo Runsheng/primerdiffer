@@ -15,6 +15,7 @@ from general_settings import primer3_general_settings
 
 
 def my_design_primer(name,seq,primer3_settings=primer3_general_settings):
+    # todo: to make the setting for the primer number easier
     """
     general wrapper for primer3-py
     :param name: name for the sequence

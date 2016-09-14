@@ -40,9 +40,7 @@ def is_nofalse_primer(blast_records,query,debugmod=False):
     return True
 
 
-def primer_check(myprimer, db, primer_number=10, debugmod=False):
-    # todo: add login instead of the print function
-
+def primer_check(myprimer, db, primer_number=5, debugmod=False):
     '''primer is a return of function primer3.bindings.designPrimers'''
     for i in range(0, primer_number):
         left = myprimer['PRIMER_LEFT_' + str(i) + '_SEQUENCE']
