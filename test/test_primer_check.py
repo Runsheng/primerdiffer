@@ -9,12 +9,12 @@
 import unittest
 
 # self import
-from utils import chr_select,dic2dic,fasta2dic
-from primer_check import primer_check
-from walk_chr import my_design_primer, walk_chr_dense
+from primerdiffer.utils import chr_select,dic2dic,fasta2dic
+from primerdiffer.primer_check import primer_check
+from primerdiffer.walk_chr import my_design_primer
 
 # set logger
-from logger import log_summary
+from primerdiffer.logger import log_summary
 logger=log_summary()
 
 
