@@ -26,14 +26,14 @@ class TestPrimerCheck(unittest.TestCase):
         self.cb4_genome = dic2dic(fasta2dic("./test/cb4.fa"))
         self.name, self.seq = chr_select(self.sp9_genome, "cniII", 700000,740000)
 
-    def tearDown(self):
-        logger.info("****tear down %s ****" % self.__str__)
-        self=None
 
     def test_1(self):
         myprimer=my_design_primer(name=self.name,seq=self.seq)
-        print primer_check(myprimer,db="./test/cb4", debugmod=True)
+        print (primer_check(myprimer,db="./test/cb4", debugmod=True))
 
+    def tearDown(self):
+        logger.info("****tear down %s ****" % self.__str__)
+        self=None
 
 if __name__ == '__main__':
     unittest.main()

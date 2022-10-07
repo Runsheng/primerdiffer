@@ -5,9 +5,12 @@
 # @Email   : Runsheng.lee@gmail.com
 # @File    : primer_check.py
 
+try:
+    from StringIO import StringIO ## for Python 2
+except ImportError:
+    from io import StringIO ## for Python 3
 
 from Bio.Blast.Applications import NcbiblastnCommandline
-from cStringIO import StringIO
 from Bio.Blast import NCBIXML
 
 
@@ -31,8 +34,8 @@ def is_nofalse_primer(blast_records,query,debugmod=False):
             # so the cutoff is less than 16 match and more than 2 mismatch in 3' region
             if hsp.align_length>=16 or len(query)-hsp.query_end<1:
                 if debugmod==True:
-                    print hsp
-                    print hsp.query_end, len(query)
+                    print (hsp)
+                    print (hsp.query_end, len(query))
                 else:
                     pass
                 return False
@@ -46,15 +49,15 @@ def primer_check(myprimer, db, primer_number=5, debugmod=False):
         left = myprimer['PRIMER_LEFT_' + str(i) + '_SEQUENCE']
         right = myprimer['PRIMER_RIGHT_' + str(i) + '_SEQUENCE']
         if debugmod:
-            print "The %d primer :" % i
-            print left, right
+            print ("The %d primer :" % i)
+            print (left, right)
         blast_records_l = primer_blast(left,db=db)
         blast_records_r = primer_blast(right,db=db)
         product_size = myprimer['PRIMER_PAIR_' + str(i) + '_PRODUCT_SIZE']
 
         if is_nofalse_primer(blast_records_l, left, debugmod=debugmod) and is_nofalse_primer(blast_records_r, right,
                                                                                              debugmod=debugmod):
-            print "Both pass"
+            print ("Both pass")
             return (left, right, product_size)
     return 0
 

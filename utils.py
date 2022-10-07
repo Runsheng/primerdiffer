@@ -30,7 +30,7 @@ def dic2dic(record_dict):
     :return the dict contain {name:seq}
     """
     seq_dict={}
-    for k,v in record_dict.iteritems():
+    for k,v in record_dict.items():
         seq=str(v.seq)
         seq_dict[k]=seq.upper()
     return seq_dict

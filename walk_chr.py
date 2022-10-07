@@ -61,12 +61,13 @@ def walk_chr_dense(genome, chro, db,
                     offset = interval / jump  # just >(interval/2)/jump, used to indicate the sucess of primer finding
                     left, right, product_size = primer_status
         i += 1
+
         if offset == interval / jump:
-            print "Get primer in %s!" % name
+            print("Get primer in %s!" % name)
             primer_dict[name] = (left, right, product_size)
             f_out.write(name + "\t" + left + "\t" + right + "\t" + str(product_size) + "\n")
         if offset == (interval / 2) / jump + 1:
-            print "Can not get primer in %s!" % name
+            print ("Can not get primer in %s!" % name)
 
     f_out.close()
     return primer_dict
