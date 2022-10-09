@@ -1,10 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Time    : 9/13/16 3:13 PM
-# @Author  : Runsheng
-# @Email   : Runsheng.lee@gmail.com
-# @File    : general_settings.py
-
 primer3_general_settings =  {
         'PRIMER_OPT_SIZE': 20,
         'PRIMER_PICK_LEFT_PRIMER':1,

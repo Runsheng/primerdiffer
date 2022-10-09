@@ -18,7 +18,7 @@ def fasta2dic(fastafile):
     Give a fasta file name, return a dict contains the name and seq
     Require Biopython SeqIO medule to parse the sequence into dict, a large genome may take a lot of RAM
     """
-    handle=open(fastafile, "rU")
+    handle=open(fastafile, "r")
     record_dict=SeqIO.to_dict(SeqIO.parse(handle,"fasta"))
     handle.close()
     return record_dict
@@ -36,6 +36,25 @@ def dic2dic(record_dict):
     return seq_dict
 
 
+def tuple_to_pos_str(pos_t):
+    """
+    reverse of pos_str_to_tuple
+    """
+    pos_s=[str(x) for x in pos_t]
+    chro, start,end=pos_s
+    return chro+":"+start+"-"+end
+
+
+def pos_str_to_tuple(pos_str):
+    """
+    pos_str: chro:start-end, same as the input for igv or ucsc web browser
+    return (chro, start, end), start and end are int
+    """
+    chro=pos_str.split(":")[0]
+    start, end =pos_str.split(":")[1].split("-") # still str
+    return (chro, int(start), int(end))
+
+
 def chr_select(seq_dict, chro, start,end):
     """
     Note the start and end is 0 based
@@ -44,10 +63,8 @@ def chr_select(seq_dict, chro, start,end):
     for example, chrcut(record_dict, "I", 100,109) returns
      ("I:100_109","AAAAAAAAAA")
     """
-    name=chro+ ":"+str(round(float(start)/1000000,2))+"M"
+    name=tuple_to_pos_str((chro, start, end))
     seq=str(seq_dict[chro])[start:end]
     return name,seq
 
 
-if __name__=="__main__":
-    pass
