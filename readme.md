@@ -1,4 +1,5 @@
 # primerdiffer: batch design primers for chromosomal level genotyping 
+![PyPI](https://img.shields.io/pypi/v/primerdiffer?color=green)
 
 ## Installation:
 python package:
