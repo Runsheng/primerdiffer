@@ -4,17 +4,19 @@
 # @Author  : Runsheng
 # @Email   : Runsheng.lee@gmail.com
 # @File    : primer_check.py
-import primer3
 
-from primerdiffer.general_settings import primer3_general_settings
 
 try:
     from StringIO import StringIO ## for Python 2
 except ImportError:
     from io import StringIO ## for Python 3
 
+import primer3
 from Bio.Blast.Applications import NcbiblastnCommandline
 from Bio.Blast import NCBIXML
+
+from primerdiffer.general_settings import primer3_general_settings
+from primerdiffer.utils import fasta2dic,dic2dic,chr_select, reverse_complement
 
 
 def my_design_primer(name,seq,primer3_settings=primer3_general_settings):
@@ -66,7 +68,7 @@ def filter_hsp(blast_records,query,cutoff_alignlength=16,cutoff_free3=2, debugmo
     return keep
 
 
-def insilicon_pcr(primer_left, primer_right, db, cutoff_alignlength=16, cutoff_free3=2, profuct_cutoff=2000,
+def insilicon_pcr(primer_left, primer_right, db, cutoff_alignlength=16, cutoff_free3=2, product_cutoff=2000,
                   debugmod=False):
     """
     para: the left and right primers
@@ -85,10 +87,27 @@ def insilicon_pcr(primer_left, primer_right, db, cutoff_alignlength=16, cutoff_f
         for pr in p_right:
             # print pl, pr
             # use only the start to get a approx length, also, the direction for left and right primer should be different
-            if pl[0] == pr[0] and abs(pl[1] - pr[1]) <= profuct_cutoff and pl[-1] * pr[-1] == -1:
+            if pl[0] == pr[0] and abs(pl[1] - pr[1]) <= product_cutoff and pl[-1] * pr[-1] == -1:
                 possible_product.append((pl[0], pl[1], pr[1]))
 
     return possible_product
+
+
+def product2seqdic(product_l, seqdic):
+    """
+    use one line from product_l to write the sequence
+    """
+    outdic={}
+    for product_1 in product_l:
+        chro, start, end=product_1
+        # the product could be forward (as usual) or reverse (F as R and R as F)
+        if end>=start:
+            name, seq=chr_select(seqdic, chro, start, end)
+            outdic[name]=seq
+        else:
+            name, seq=chr_select(seqdic, chro, end, start)
+            outdic[name+"_RC"]=reverse_complement(seq)
+    return outdic
 
 
 def _is_nofalse_primer(blast_records,query,debugmod=False):

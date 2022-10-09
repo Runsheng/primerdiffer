@@ -71,6 +71,12 @@ class TestPrimerCheck(unittest.TestCase):
                             debugmod=True)
                )
 
+    def test_product2seqdic(self):
+        aa = insilicon_pcr(primer_left='gcactttcatgtccctcaac',
+                           primer_right='cactctattctcaccccacc',
+                           db=self.cb4_genome)
+        print(product2seqdic(aa, self.cb4))
+
 
     def tearDown(self):
         self=None

@@ -9,16 +9,15 @@
 
 # self import
 import os
-from os.path import exists
-
-from Bio.Blast.Applications import NcbimakeblastdbCommandline
 
 from primerdiffer.primer_check import my_design_primer, primer_check
-from primerdiffer.utils import dic2dic, fasta2dic, chr_select, tuple_to_pos_str, pos_str_to_tuple
+from primerdiffer.utils import dic2dic, fasta2dic, chr_select, tuple_to_pos_str, pos_str_to_tuple, checkblastdb
 
 
 def walk_chr_dense(genome, chro, start, end, db1, db2,
-                   interval=500000, jump=4000, out_prefix="primers"):
+                   cutoff_alignlength=16, cutoff_free3=2, product_cutoff=2000,
+                   db1_maxhit=1, db2_maxhit=0,
+                   interval=500000, jump=4000, out_prefix="primers", debugmod=False):
     """
     :param genome: genome is a dict in name:seq,
     :param chro:
@@ -43,7 +42,10 @@ def walk_chr_dense(genome, chro, start, end, db1, db2,
                 offset += 1
             else:
                 myprimer = my_design_primer(name=name, seq=seq)
-                primer_used = primer_check(myprimer,db1,db2, debugmod=True)
+                primer_used = primer_check(myprimer,db1,db2,
+                                           cutoff_alignlength, cutoff_free3, product_cutoff,
+                                           db1_maxhit, db2_maxhit,
+                                           debugmod=debugmod)
                 if primer_used == 0:
                     offset += 1
                 else:
@@ -62,27 +64,10 @@ def walk_chr_dense(genome, chro, start, end, db1, db2,
     return primer_dict
 
 
-def makeblastdb(genomefile):
-    cline = NcbimakeblastdbCommandline(dbtype="nucl",
-                                       input_file=genomefile)
-    NcbimakeblastdbCommandline(cmd='makeblastdb', dbtype='prot', input_file='NC_005816.faa')
-    print(cline)
-    cline()
-
-
-def checkblastdb(genomefile):
-    """
-    check if the blastdb exist, if not, create one
-    """
-    dbfile=genomefile+".nsq"
-    if exists(dbfile):
-        return 0
-    else:
-        makeblastdb(genomefile)
-        return 1
-
-
-def flow_walk_chr(wkdir, genome1, genome2, pos_str, interval=4000, jump=400, out_prefix="primers"):
+def flow_walk_chr(wkdir, genome1, genome2, pos_str,
+                  cutoff_alignlength=16, cutoff_free3=2, product_cutoff=2000,
+                  db1_maxhit=1, db2_maxhit=0,
+                  interval=4000, jump=400, out_prefix="primers"):
     """
 
     genome1: the genome fasta file used to design primers
@@ -100,10 +85,14 @@ def flow_walk_chr(wkdir, genome1, genome2, pos_str, interval=4000, jump=400, out
 
     # main
     g1=dic2dic(fasta2dic(genome1))
-    #g2=dic2dic(fasta2dic(genome2))
     chro, start, end = pos_str_to_tuple(pos_str)
 
     primer_dict=walk_chr_dense(genome=g1, chro=chro, start=start, end=end,
                                db1=genome1,db2=genome2,
-                   interval=interval, jump=jump, out_prefix=out_prefix)
+                               cutoff_alignlength=cutoff_alignlength,
+                               cutoff_free3=cutoff_free3,
+                               product_cutoff=product_cutoff,
+                               db1_maxhit=db1_maxhit,
+                               db2_maxhit=db2_maxhit,
+                            interval=interval, jump=jump, out_prefix=out_prefix)
     print(primer_dict)

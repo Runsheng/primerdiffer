@@ -10,8 +10,21 @@ Some general functions used for sequence file parser and coding running
 """
 
 # Third oart import
-from Bio import SeqIO
+from os.path import exists
 
+from Bio import SeqIO, Seq
+from Bio.Blast.Applications import NcbimakeblastdbCommandline
+
+
+def reverse_complement(seq):
+    """
+        Given: A DNA string s of length at most 1000 bp.
+        Return: The reverse complement sc of s.
+        due to the complement_map,
+        the symbol such as \n and something else is illegal
+        the input need to be pure sequence
+    """
+    return str(Seq.reverse_complement(seq))
 
 def fasta2dic(fastafile):
     """
@@ -34,6 +47,13 @@ def dic2dic(record_dict):
         seq=str(v.seq)
         seq_dict[k]=seq.upper()
     return seq_dict
+
+def dic2fasta(record_dict, out):
+    with open(out, "w") as fw:
+        for k, v in record_dict.items():
+            fw.write(">"+k+"\n")
+            fw.write(v)
+            fw.write("\n")
 
 
 def tuple_to_pos_str(pos_t):
@@ -68,3 +88,21 @@ def chr_select(seq_dict, chro, start,end):
     return name,seq
 
 
+def makeblastdb(genomefile):
+    cline = NcbimakeblastdbCommandline(dbtype="nucl",
+                                       input_file=genomefile)
+    NcbimakeblastdbCommandline(cmd='makeblastdb', dbtype='prot', input_file='NC_005816.faa')
+    print(cline)
+    cline()
+
+
+def checkblastdb(genomefile):
+    """
+    check if the blastdb exist, if not, create one
+    """
+    dbfile=genomefile+".nsq"
+    if exists(dbfile):
+        return 0
+    else:
+        makeblastdb(genomefile)
+        return 1
