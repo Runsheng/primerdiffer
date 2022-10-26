@@ -9,7 +9,7 @@ setup(
     license='GPL-2',
     author='runsheng',
     author_email='runsheng.lee@gmail.com',
-    description='batch design of primers for genotyping',
+    description='batch design of primers for genotyping two or more haplotypes in hybrids',
     install_requires = ["primer3-py>=0.6.1",
                         "biopython>=1.78"],
     scripts = ['bin/primerdesign.py',

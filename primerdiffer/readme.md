@@ -15,4 +15,4 @@
             - -> primers specific for other strain
             
 3. The pair-wised design can be extended to 3 or more sequence
-    - later works
+    - merge the ref files to ref2 would be a workaround

@@ -16,7 +16,7 @@ from Bio.Blast.Applications import NcbiblastnCommandline
 from Bio.Blast import NCBIXML
 
 from primerdiffer.general_settings import primer3_general_settings
-from primerdiffer.utils import fasta2dic,dic2dic,chr_select, reverse_complement
+from primerdiffer.utils import chr_select, reverse_complement
 
 
 def my_design_primer(name,seq,primer3_settings=primer3_general_settings):
@@ -31,7 +31,6 @@ def my_design_primer(name,seq,primer3_settings=primer3_general_settings):
                 'SEQUENCE_TEMPLATE':seq}
     myprimer=primer3.bindings.designPrimers(seq_args,primer3_settings)
     return myprimer
-
 
 
 def primer_blast(query, db):

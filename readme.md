@@ -2,6 +2,9 @@
 ![PyPI](https://img.shields.io/pypi/v/primerdiffer?color=green)
 
 ## Installation:
+The package worked with python version >=3.4.
+Only tested in linux x64 system.
+
 python package:
 - primer3-py>=0.6.1
 - biopython>=1.7.8
@@ -17,9 +20,9 @@ conda install -c bioconda blast # install ncbi blast, which is not included in p
 
 ## Case example: primerdesign.py for primerdiffer
 Design genome-wide specific primers for two species/sub-species/divergent sequences:
-- Greedy design primers for a region in genome1 and make a specifiy check using genome2
-- The dis-similarity between genome1 and genome2 >5%. 
-```bash
+- Greedy design primers for a region in genome1 and make a specificity check using genome2
+- The dis-similarity between genome1 and genome2 >= 5%. 
+```
 usage: primerdesign.py [-h] [-d WKDIR] [-g1 GENOME1] [-g2 GENOME2] [-pos POSITION] [--alignlen ALIGNLEN]
                        [--free3len FREE3LEN] [--productlen PRODUCTLEN] [-h1 HIT1] [-h2 HIT2]
                        [-i INTERVAL] [-j JUMP] [--prefix PREFIX]
@@ -54,13 +57,18 @@ optional arguments:
   --prefix PREFIX       prefix of output file, default is primers
 ```
 
-Use C. nigoni and C.briggsae genome as example:
-```bash
-# the C. nigoni genome is cn3_new.fa and C. briggsae genome is cb5.fa
-# design C. briggsae unique primer, which would not amplify any region in C. nigoni, 
-# in the region of ChrX:12881200-15106660
-# inside every 4kb interval
+Use _C. nigoni_ and _C.briggsae_ genomes as example. The two fasta files can be downloaded separately 
+from [cb4.fa](https://github.com/Runsheng/cbgenome/releases/download/cb5pre_cn3pre/cb5.fa.gz) and 
+[cn3_new.fa](https://github.com/Runsheng/cbgenome/releases/download/cb5pre_cn3pre/cn3_new.fa.gz). 
+
+The _C. nigoni_ genome is cn3_new.fa and _C. briggsae_ genome is cb5.fa. To design _C. briggsae_ unique primer, 
+which would not amplify any region in _C. nigoni_, and amplify only one region in _C. briggsae_. 
+The targeted region for C. briggsae is ChrX:12881200-15106660 (-pos),
+one primer is designed for every 4kb interval (--interval).
+```
 primerdesign.py -g1 cb5.fa -g2 cn3_new.fa -pos "ChrX:12881200-15106660" --interval 4000
+
+# check the result in file "primers_ChrX:12881200-15106660.txt"
 head primers_ChrX\:12881200-15106660.txt
 #ChrX:12881200-12881700	GATCCAAAACATGAGTGGCC	CGAGATCATTGGCTCAAAGT	287
 #ChrX:12886200-12886700	GTTTTCTCTTCAAGTGCCCG	CTCCCACATCTTGTAGGTCC	416
@@ -70,7 +78,7 @@ head primers_ChrX\:12881200-15106660.txt
 
 
 Use in silico PCR to get the position and the product of the primer
-```bash
+```
 usage: ispcr.py [-h] [-d WKDIR] [-f FORWARD] [-r REVERSE] [-g GENOME] [--alignlen ALIGNLEN]
                 [--free3len FREE3LEN] [--productlen PRODUCTLEN] [-o OUT]
 
@@ -105,5 +113,9 @@ head ispcr.fa
 #ATGATGATGATGATGGTGGGGTGAGAATAGAGT
 ```
 
+## Roadmap for other functions:
+1. To use user-provided primer parameters.Primer design parameter now is fine-tuned for general purpose PCR, which can be found in "general_settings.py".This file may need be modified to generate primers for specific purpose PCR like real-time qPCR.
+2. To update the RFLP method for primer design to differ sequences with almost identical sequence.
+3. To update the primer design using VCF file.
 
     
