@@ -58,16 +58,18 @@ optional arguments:
 ```
 
 Use _C. nigoni_ and _C.briggsae_ genomes as example. The two fasta files can be downloaded separately 
-from [cb4.fa](https://github.com/Runsheng/cbgenome/releases/download/cb5pre_cn3pre/cb5.fa.gz) and 
+from [cb5.fa](https://github.com/Runsheng/cbgenome/releases/download/cb5pre_cn3pre/cb5.fa.gz) and 
 [cn3_new.fa](https://github.com/Runsheng/cbgenome/releases/download/cb5pre_cn3pre/cn3_new.fa.gz). 
 
 The _C. nigoni_ genome is cn3_new.fa and _C. briggsae_ genome is cb5.fa. To design _C. briggsae_ unique primer, 
 which would not amplify any region in _C. nigoni_, and amplify only one region in _C. briggsae_. 
 The targeted region for C. briggsae is ChrX:12881200-15106660 (-pos),
 one primer is designed for every 4kb interval (--interval).
-```
+```bash
 primerdesign.py -g1 cb5.fa -g2 cn3_new.fa -pos "ChrX:12881200-15106660" --interval 4000
+```
 
+```
 # check the result in file "primers_ChrX:12881200-15106660.txt"
 head primers_ChrX\:12881200-15106660.txt
 #ChrX:12881200-12881700	GATCCAAAACATGAGTGGCC	CGAGATCATTGGCTCAAAGT	287
@@ -104,6 +106,10 @@ optional arguments:
 
 ```bash
 ispcr.py -f gcactttcatgtccctcaac -r cactctattctcaccccacc -g cb5.fa -o ispcr.fa
+```
+
+```
+# check the PCR product in ispcr.fa
 head ispcr.fa
 #>ChrI:230699-231076_RC
 #GCACTTTCATGTCCCTCAACCAGTCGTTTTTCCTTACCTCTCCCCTTCCTTTTTTCCCCCTCCCAGATGACGTCACCCATCTGTCC
@@ -116,6 +122,6 @@ head ispcr.fa
 ## Roadmap for other functions:
 1. To use user-provided primer parameters.Primer design parameter now is fine-tuned for general purpose PCR, which can be found in "general_settings.py".This file may need be modified to generate primers for specific purpose PCR like real-time qPCR.
 2. To update the RFLP method for primer design to differ sequences with almost identical sequence.
-3. To update the primer design using VCF file.
+3. To update the primer design using VCF file for closely related haplotypes.
 
     
