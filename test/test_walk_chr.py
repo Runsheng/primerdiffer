@@ -27,6 +27,12 @@ class TestWalkChr(unittest.TestCase):
         self.cb4_genome = "/t1/ref_BN/cb5.fa"
         #self.name, self.seq = chr_select(self.cb4_genome, "ChrX", 19424476,19655212)
 
+    def test_config_dump_load(self):
+        import json
+        from primerdiffer.general_settings import primer3_general_settings
+        with open("./test/primer3config", "w") as fw:
+            json.dump(primer3_general_settings, )
+
 
     def test_walk_chr_dense(self):
         wkdir=os.getcwd()

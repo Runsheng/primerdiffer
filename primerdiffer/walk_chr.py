@@ -12,12 +12,15 @@ import os
 
 from primerdiffer.primer_check import my_design_primer, primer_check
 from primerdiffer.utils import dic2dic, fasta2dic, chr_select, tuple_to_pos_str, pos_str_to_tuple, checkblastdb
+from primerdiffer.general_settings import primer3_general_settings
 
 
 def walk_chr_dense(genome, chro, start, end, db1, db2,
                    cutoff_alignlength=16, cutoff_free3=2, product_cutoff=2000,
                    db1_maxhit=1, db2_maxhit=0,
-                   interval=500000, jump=4000, out_prefix="primers", debugmod=False):
+                   interval=500000, jump=4000, out_prefix="primers", debugmod=False,
+                   primer3_settings=primer3_general_settings
+                   ):
     """
     :param genome: genome is a dict in name:seq,
     :param chro:
@@ -41,7 +44,7 @@ def walk_chr_dense(genome, chro, start, end, db1, db2,
             if "N" in seq.upper():
                 offset += 1
             else:
-                myprimer = my_design_primer(name=name, seq=seq)
+                myprimer = my_design_primer(name=name, seq=seq, primer3_settings=primer3_settings)
                 primer_used = primer_check(myprimer,db1,db2,
                                            cutoff_alignlength, cutoff_free3, product_cutoff,
                                            db1_maxhit, db2_maxhit,
@@ -67,7 +70,8 @@ def walk_chr_dense(genome, chro, start, end, db1, db2,
 def flow_walk_chr(wkdir, genome1, genome2, pos_str,
                   cutoff_alignlength=16, cutoff_free3=2, product_cutoff=2000,
                   db1_maxhit=1, db2_maxhit=0,
-                  interval=4000, jump=400, out_prefix="primers"):
+                  interval=4000, jump=400, out_prefix="primers",
+                  primer3_settings = primer3_general_settings):
     """
 
     genome1: the genome fasta file used to design primers
@@ -94,5 +98,6 @@ def flow_walk_chr(wkdir, genome1, genome2, pos_str,
                                product_cutoff=product_cutoff,
                                db1_maxhit=db1_maxhit,
                                db2_maxhit=db2_maxhit,
-                            interval=interval, jump=jump, out_prefix=out_prefix)
+                            interval=interval, jump=jump, out_prefix=out_prefix,
+                               primer3_settings=primer3_settings)
     print(primer_dict)

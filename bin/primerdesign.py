@@ -9,14 +9,16 @@ The main script used to run cmd orders
 """
 
 import argparse
-import os,sys
+import os
+import sys
+import json
 
 #currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 #parentdir = os.path.dirname(os.path.dirname(currentdir))
 #sys.path.insert(0,parentdir)
 
 # self import
-from primerdiffer.walk_chr import flow_walk_chr
+from primerdiffer.walk_chr import flow_walk_chr, primer3_general_settings
 
 parser=argparse.ArgumentParser()
 parser.add_argument("-d", "--wkdir", default=None,
@@ -53,10 +55,24 @@ parser.add_argument("-j","--jump",  type=int, default=500,
 parser.add_argument("--prefix", default="primers",
                     help="prefix of output file, default is primers")
 
+# add user settings
+parser.add_argument("--primer3config", default=None,
+                    help="the config file for the primer3 ")
 
 # default handler
 args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
 wkdir=os.getcwd() if args.wkdir is None else args.wkdir
+
+
+# deal with config
+primer3_setting = primer3_general_settings
+if args.primer3config is None:
+    pass
+else: # update the primer3 setting from the givien parameters
+    with open(args.primer3config, "r") as f:
+        primer3_user_setting = eval(f.read()) # read the config as a dict
+        primer3_setting.update(primer3_user_setting)
+
 
 flow_walk_chr(wkdir=wkdir,
               genome1=args.genome1,
@@ -69,4 +85,5 @@ flow_walk_chr(wkdir=wkdir,
               db2_maxhit=args.hit2,
               interval=args.interval,
               jump=args.jump,
-              out_prefix=args.prefix)
+              out_prefix=args.prefix,
+              primer3_settings=primer3_setting)
