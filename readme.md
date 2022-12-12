@@ -120,7 +120,7 @@ head ispcr.fa
 ```
 
 ## Case example: Design general purpose primers with given parameters
-The default primer design parameter is as described in [general_setting.py](https://github.com/Runsheng/primerdiffer/blob/master/primerdiffer/general_settings.py):
+The default primer design parameter is described in [general_setting.py](https://github.com/Runsheng/primerdiffer/blob/master/primerdiffer/general_settings.py):
 ```python
 primer3_general_settings =  {
         'PRIMER_OPT_SIZE': 20,
@@ -146,7 +146,7 @@ The new parameter can be supplemnted as a file with the terms which need to be c
 # only changed the product size, the others are the same the default
 {'PRIMER_PRODUCT_SIZE_RANGE': [[100, 200]]}
 ```
-Run primerdesign.py to design a qPCR primer(product size 100-20bp, use the config.txt for primer3config) for _C. briggsae_ mitochondrial DNA sequence
+Run primerdesign.py to design a qPCR primer(product size 100-200bp, use the config.txt for primer3config) for _C. briggsae_ mitochondrial DNA sequence
 [NC_009885.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_009885.1?report=fasta) in any region (use 0:-1 means from the first 
 nucleotide to the last); check the _C. briggsae_ genome cb5.fa for false priming, make sure the hit is 0.
 ```bash
@@ -158,8 +158,8 @@ primerdesign.py -g1 NC_009885.fa -g2 cb5.fa -pos "NC_009885.1:0:-1" \
 
 
 
-## Roadmap for other functions:
-1. To update the RFLP method for primer design to differ sequences with almost identical sequence.
-2. To update the primer design using VCF file for closely related haplotypes.
+## Other functions:
+1. To design the primer using VCF file for closely related haplotypes (i.e., strain/individual level differences). Please check primervcf package.
+2. Todo: To update the RFLP method for primer design to differ sequences with almost identical sequence.
 
     

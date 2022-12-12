@@ -68,7 +68,7 @@ wkdir=os.getcwd() if args.wkdir is None else args.wkdir
 primer3_setting = primer3_general_settings
 if args.primer3config is None:
     pass
-else: # update the primer3 setting from the givien parameters
+else: # update the primer3 setting from the given parameters
     with open(args.primer3config, "r") as f:
         primer3_user_setting = eval(f.read()) # read the config as a dict
         primer3_setting.update(primer3_user_setting)
