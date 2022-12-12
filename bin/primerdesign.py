@@ -11,7 +11,6 @@ The main script used to run cmd orders
 import argparse
 import os
 import sys
-import json
 
 #currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 #parentdir = os.path.dirname(os.path.dirname(currentdir))
