@@ -1,9 +1,9 @@
 # primerdiffer: batch design primers for chromosomal level genotyping 
-![PyPI](https://img.shields.io/pypi/v/primerdiffer?color=green)
+<a href="https://pypi.python.org/pypi/primer3-py" rel="pypi">![PyPI](https://img.shields.io/pypi/v/primerdiffer?color=green) </a>
+<a href="http://www.gnu.org/licenses/gpl-2.0.html" rel="license">![License](https://img.shields.io/pypi/l/primerdiffer?color=orange)</a>
 
 ## Installation:
-The package worked with python version >=3.4.
-Only tested in linux x64 system.
+The package worked with python version >=3.8 (Tested in python 3.8, 3.9, 3.10 and 3.11). Only tested in linux x64 system.
 
 python package:
 - primer3-py>=0.6.1
