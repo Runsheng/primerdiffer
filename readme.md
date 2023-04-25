@@ -156,10 +156,12 @@ primerdesign.py -g1 NC_009885.fa -g2 cb5.fa -pos "NC_009885.1:0:-1" \
 ```
 
 
+## Citation:
+Please kindly cite our paper in bioinformatics if you find primerdiffer or primervcf useful in your work: [Link to publication](https://academic.oup.com/bioinformatics/article/39/4/btad188/7126407).
 
+ **Ren, X., Shao, Y., Zhang, Y., Ni, Y., Bi, Y., & Li, R. (2023). Primerdiffer: a python command line module for large-scale primer design in haplotype genotyping. Bioinformatics, btad188.**
 
 ## Other functions:
 1. To design the primer using VCF file for closely related haplotypes (i.e., strain/individual level differences). Please check primervcf package.
 2. Todo: To update the RFLP method for primer design to differ sequences with almost identical sequence.
 
-    
