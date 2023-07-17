@@ -31,7 +31,8 @@ def walk_chr_dense(genome, chro, start, end, db1, db2,
     """
     primer_dict = {}
     pos_str= tuple_to_pos_str((chro, start, end))
-    f_out = open(out_prefix + "_" + pos_str + ".txt", "w")
+    pos_str_file=pos_str.replace(":", "_") # add the file str to remove the : in the file, which is invalid in linux
+    f_out = open(out_prefix + "_" + pos_str_file + ".txt", "w")
 
     n = len(genome[chro][start:end]) / interval
     i = 0
