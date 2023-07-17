@@ -30,8 +30,8 @@ class TestWalkChr(unittest.TestCase):
     def test_config_dump_load(self):
         import json
         from primerdiffer.general_settings import primer3_general_settings
-        with open("./test/primer3config", "w") as fw:
-            json.dump(primer3_general_settings, )
+        with open("./primer3config", "w") as fw:
+            json.dump(primer3_general_settings, fw)
 
 
     def test_walk_chr_dense(self):

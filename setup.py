@@ -18,7 +18,8 @@ setup(
     install_requires = ["primer3-py>=0.6.1",
                         "biopython>=1.78"],
     scripts = ['bin/primerdesign.py',
-               'bin/ispcr.py'
+               'bin/ispcr.py',
+               'bin/getpos_primers.py'
                 ]
 )
 
