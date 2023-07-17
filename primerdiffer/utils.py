@@ -91,7 +91,6 @@ def chr_select(seq_dict, chro, start,end):
 def makeblastdb(genomefile):
     cline = NcbimakeblastdbCommandline(dbtype="nucl",
                                        input_file=genomefile)
-    NcbimakeblastdbCommandline(cmd='makeblastdb', dbtype='prot', input_file='NC_005816.faa')
     print(cline)
     cline()
 
